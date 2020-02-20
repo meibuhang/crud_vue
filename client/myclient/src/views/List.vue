@@ -29,30 +29,25 @@
           </tbody>
         </table>
       </template>
-           <div id="pagination">
-            <button @click="prevPage" class='btnnav'>Prev</button> 
-            <button @click="nextPage" class='btnnav'>Next</button>
-          </div>
+      <div id="pagination">
+        <button @click="prevPage" class="btnnav">Prev</button>
+        <button @click="nextPage" class="btnnav">Next</button>
+      </div>
     </v-simple-table>
-  
-  
-
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
-
 export default {
   name: "ListUser",
-
   data() {
     return {
       loading: true,
       headers: [{ text: "Name" }, { text: "Email" }, { text: "Address" }],
-      data: {},
-    pageSize:3,
-  currentPage:1
+      data: [],
+      pageSize: 3,
+      currentPage: 1
     };
   },
   methods: {
@@ -79,24 +74,25 @@ export default {
           console.log("error load data");
         });
     },
-     
-    nextPage:function() {
-  if((this.currentPage*this.pageSize) < this.data.length) this.currentPage++;
-},
-prevPage:function() {
-  if(this.currentPage > 1) this.currentPage--;
-}
-},
-created () {
+
+    nextPage: function() {
+      if (this.currentPage * this.pageSize < this.data.length)
+        this.currentPage++;
+    },
+    prevPage: function() {
+      if (this.currentPage > 1) this.currentPage--;
+    }
+  },
+  created() {
     this.load();
   },
-  
+
   computed: {
-   sortedUsers() {
+    sortedUsers() {
       return this.data.slice(0).filter((row, index) => {
-        let start = (this.currentPage-1)*this.pageSize;
-        let end = this.currentPage*this.pageSize;
-        if(index >= start && index < end) return true;
+        let start = (this.currentPage - 1) * this.pageSize;
+        let end = this.currentPage * this.pageSize;
+        if (index >= start && index < end) return true;
       });
     }
   },
@@ -114,20 +110,18 @@ created () {
 #btn {
   color: #ffffff;
 }
-
 #pagination {
   display: flex;
   list-style: none;
   font-family: sans-serif;
-  justify-content:center;
-  margin:30px 0;
+  justify-content: center;
+  margin: 30px 0;
 }
-
-.btnnav{
-  padding:20px 20px;
-  margin:10px 15px;
-  background:#1E88E5;
-  color:#fff;
-  font-weight:bold;
+.btnnav {
+  padding: 20px 20px;
+  margin: 10px 15px;
+  background: #1e88e5;
+  color: #fff;
+  font-weight: bold;
 }
 </style>
